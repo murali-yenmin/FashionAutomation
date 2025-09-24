@@ -5,6 +5,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+      // Increase timeout for video generation
+      timeout: 120,
+    },
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
