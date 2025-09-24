@@ -57,12 +57,12 @@ ${prompt ? `Incorporate this user request: ${prompt}` : ''}
       model: googleAI.model('veo-2.0-generate-001'),
       prompt: [
         {
-          text: analysisPrompt,
-        },
-        {
           media: {
             url: imageDataUri,
           },
+        },
+        {
+          text: analysisPrompt,
         },
       ],
       config: {
