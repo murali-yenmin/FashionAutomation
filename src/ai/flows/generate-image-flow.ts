@@ -41,29 +41,6 @@ const GenerateImageOutputSchema = z.object({
 });
 export type GenerateImageOutput = z.infer<typeof GenerateImageOutputSchema>;
 
-const generateImagePrompt = ai.definePrompt({
-  name: 'generateImagePrompt',
-  input: { schema: GenerateImageInputSchema },
-  output: { schema: GenerateImageOutputSchema },
-  prompt: `You are an expert image editor. Create a photorealistic image based on the following inputs.
-
-- The main subject is the person from the model image.
-- The subject should be wearing the clothes from the clothing image.
-- The final scene should use the background from the background image.
-- The model's pose should be '{{{pose}}}'.
-
-Model Image:
-{{media url=model}}
-
-Clothing Image:
-{{media url=clothing}}
-
-Background Image:
-{{media url=background}}
-
-Generate a new image that seamlessly combines these elements.`,
-});
-
 export const generateImageFlow = ai.defineFlow(
   {
     name: 'generateImageFlow',
