@@ -41,10 +41,10 @@ const GenerateImageOutputSchema = z.object({
 });
 export type GenerateImageOutput = z.infer<typeof GenerateImageOutputSchema>;
 
-const prompt = ai.definePrompt({
+const generateImagePrompt = ai.definePrompt({
   name: 'generateImagePrompt',
   input: { schema: GenerateImageInputSchema },
-  output: { schema: z.string() },
+  output: { schema: GenerateImageOutputSchema },
   prompt: `You are an expert image editor. Create a photorealistic image based on the following inputs.
 
 - The main subject is the person from the model image.
@@ -72,7 +72,7 @@ export const generateImageFlow = ai.defineFlow(
   },
   async (input) => {
     const { media } = await ai.generate({
-      model: 'googleai/imagen-4.0-fast-generate-001',
+      model: 'googleai/gemini-2.5-flash-image-preview',
       prompt: [
         {
           text: `You are an expert image editor. Create a photorealistic image based on the following inputs.
@@ -88,6 +88,9 @@ Generate a new image that seamlessly combines these elements.`,
         { media: { url: input.clothing } },
         { media: { url: input.background } },
       ],
+      config: {
+        responseModalities: ['TEXT', 'IMAGE'],
+      },
     });
 
     if (!media || !media.url) {
