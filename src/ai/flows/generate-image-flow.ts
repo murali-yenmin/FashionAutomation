@@ -72,7 +72,7 @@ export const generateImageFlow = ai.defineFlow(
   },
   async (input) => {
     const { media } = await ai.generate({
-      model: 'googleai/gemini-2.5-flash-image-preview',
+      model: 'googleai/imagen-4.0-fast-generate-001',
       prompt: [
         {
           text: `You are an expert image editor. Create a photorealistic image based on the following inputs.
@@ -82,20 +82,12 @@ export const generateImageFlow = ai.defineFlow(
 - The final scene should use the background from the background image.
 - The model's pose should be '${input.pose}'.
 
-Model Image:`,
+Generate a new image that seamlessly combines these elements.`,
         },
         { media: { url: input.model } },
-        { text: 'Clothing Image:' },
         { media: { url: input.clothing } },
-        { text: 'Background Image:' },
         { media: { url: input.background } },
-        {
-          text: 'Generate a new image that seamlessly combines these elements.',
-        },
       ],
-      config: {
-        responseModalities: ['TEXT', 'IMAGE'],
-      },
     });
 
     if (!media || !media.url) {
